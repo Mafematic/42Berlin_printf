@@ -1,0 +1,153 @@
+#include "ft_printf.h"
+#include <stdio.h>
+#include <limits.h>
+
+int ft_parse(const char *format, va_list args)
+{
+	int count;
+
+	count = 0;
+	if (*format == 'c')
+		count += ft_putchar(va_arg(args, int));
+	else if (*format == 's')
+		count += ft_putstr(va_arg(args, char *));
+	else if (*format == 'd')
+		count += ft_putnbr(va_arg(args, int));
+	else if (*format == 'x')
+		count += ft_puthex(va_arg(args, unsigned int));
+	else if (*format == 'X')
+		count += ft_puthex_large(va_arg(args, unsigned int));
+	else if (*format == 'p')
+		count += ft_putptr(va_arg(args, void *));
+	else if (*format == '%')
+		count += ft_putchar('%');
+	return (count);
+}
+
+int ft_printf(const char *format, ...)
+{
+	int i;
+	int count;
+	va_list args;
+
+	i = 0;
+	count = 0;
+	va_start(args, format);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			if (ft_isalpha(format[i]) || format[i] == '%')
+			{
+				count += ft_parse(&format[i], args);
+				if (format[i] == '%')
+					i++; 
+				while (ft_isalpha(format[i]))
+					i++;
+			}
+		}
+		else
+		{
+			ft_putchar(format[i]);
+			count++;
+			i++;
+		}
+	}
+	va_end(args);
+	return (count);
+}
+
+int main(void)
+{
+	char str[] = "Hello";
+	int n = 255;
+	void *ptr = &n;
+	char c = 'A';
+
+	printf("Test 1:\n");
+	printf("printf: %s\n", str);
+	ft_printf("ft_printf: %s\n", str);
+
+	printf("\nTest 2:\n");
+	printf("printf: %d\n", n);
+	ft_printf("ft_printf: %d\n", n);
+
+	printf("\nTest 3:\n");
+	printf("printf: %x\n", n);
+	ft_printf("ft_printf: %x\n", n);
+
+	printf("\nTest 4:\n");
+	printf("printf: %X\n", n);
+	ft_printf("ft_printf: %X\n", n);
+
+	printf("\nTest 5:\n");
+	printf("printf: %p\n", ptr);
+	ft_printf("ft_printf: %p\n", ptr);
+
+	printf("\nTest 6:\n");
+	printf("printf: %c\n", c);
+	ft_printf("ft_printf: %c\n", c);
+
+	printf("\nTest 7:\n");
+	printf("printf: %%%c\n", c);
+	ft_printf("ft_printf: %%%c\n", c);
+	
+	printf("\nTest 8:\n");
+	printf("printf: %%\n");
+	ft_printf("ft_printf: %%\n");
+	
+	printf("\nTest 9:\n");
+	printf("printf: Hello\\nWorld\n");
+	ft_printf("ft_printf: Hello\\nWorld\n");
+
+	printf("\nTest 10:\n");
+	printf("printf: \\tTabbed\\toutput\n");
+	ft_printf("ft_printf: \\tTabbed\\toutput\n");
+
+	printf("\nTest 11:\n");
+	printf("printf: Multiple %s %d %c %x %X %p\n", str, n, c, n, n, ptr);
+	ft_printf("ft_printf: Multiple %s %d %c %x %X %p\n", str, n, c, n, n, ptr);
+
+	printf("\nTest 12:\n");
+	printf("printf: Edge case: %d\n", INT_MAX);
+	ft_printf("ft_printf: Edge case: %d\n", INT_MAX);
+
+	printf("\nTest 13:\n");
+	printf("printf: Edge case: %d\n", INT_MIN);
+	ft_printf("ft_printf: Edge case: %d\n", INT_MIN);
+
+	printf("\nBonus Tests\n");
+	
+	n = -42;
+
+	printf("Test 1:\n");
+	printf("printf: %+d\n", n);
+	ft_printf("ft_printf: %+d\n", n);
+
+	printf("\nTest 2:\n");
+	printf("printf: %10s\n", str);
+	ft_printf("ft_printf: %10s\n", str);
+
+	printf("\nTest 3:\n");
+	printf("printf: %08x\n", n);
+	ft_printf("ft_printf: %08x\n", n);
+
+	printf("\nTest 4:\n");
+	printf("printf: %.4d\n", n);
+	ft_printf("ft_printf: %.4d\n", n);
+
+	printf("\nTest 5:\n");
+	printf("printf: %6c\n", c);
+	ft_printf("ft_printf: %6c\n", c);
+
+	printf("\nTest 6:\n");
+	printf("printf: %p\n", ptr);
+	ft_printf("ft_printf: %p\n", ptr);
+
+	printf("\nTest 7:\n");
+	printf("printf: %.*s\n", 3, str);
+	ft_printf("ft_printf: %.*s\n", 3, str);
+
+	return 0;
+}
