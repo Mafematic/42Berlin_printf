@@ -59,15 +59,15 @@ int ft_printf(const char *format, ...)
 	return (count);
 }
 
-
+/*
 int main(void)
 {
-	//printf(" %d ", -1);
-	//printf("%d", printf(" %d ", -1));
-	//ft_printf("%d", ft_printf(" %d ", -1));
+	// printf(" %d ", -1);
+	// printf("%d", printf(" %d ", -1));
+	// ft_printf("%d", ft_printf(" %d ", -1));
 
 	//printf(" %d ", 10);
-	ft_printf("%d", ft_printf("%d", 100));
+	ft_printf("%d", ft_printf(" %d ", -100));
 
 	//printf(" NULL %s NULL ", NULL);
 	//printf("%d", printf(" NULL %s NULL ", NULL));
@@ -76,7 +76,7 @@ int main(void)
 	//ft_printf(" NULL %s NULL ", NULL);
 	//ft_printf("%d", ft_printf(" NULL %s NULL ", NULL));
 	
-	/*
+	
 	printf("%s", "--");
 	printf("%d", printf("%s", "--"));
 	ft_printf("%s", "--");
@@ -172,8 +172,8 @@ int main(void)
 	printf("printf: %.*s\n", 3, str);
 	ft_printf("ft_printf: %.*s\n", 3, str);
 	
-	*/
 	return 0;
 
 }
+*/
 

@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 int ft_isalpha(int c)
 {
@@ -37,19 +38,39 @@ int ft_putstr(const char *str)
 int ft_putnbr(int n)
 {
 	long num;
+	int count = 0;
+	char *arr;
+	int i;
 
-	num = n;
-	if (num < 0)
+	i = 0;
+	if (n < 0)
 	{
+		n = -n;
+		i++;
+		count++;
 		write(1, "-", 1);
-		num = -num;
 	}
-	if (num >= 10)
+	num = n;
+	while (n >= 1)
 	{
-		ft_putnbr(num / 10);
+		count++;
+		n /= 10;
 	}
-	ft_putchar(num % 10 + '0');
-	return count; 
+	arr = (char*)malloc(sizeof(char) * (count + 1));
+
+	arr[count] = '\0'; 
+
+    while (i < count)
+    {
+        arr[count - i - 1] = num % 10 + '0';
+        num /= 10;
+        i++;
+    }
+
+    write(1, arr, count);
+
+	free(arr);
+	return count;
 }
 
 int ft_puthex(unsigned long long int n)
