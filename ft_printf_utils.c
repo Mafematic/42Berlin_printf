@@ -22,21 +22,26 @@ int ft_putchar(int c)
 
 int ft_putstr(const char *str)
 {
-	int i;
+    int i;
+    int ret;
 
-	if (!str)
-	{
-		ft_putstr("(null)");
-		return (6);
-	}
+    if (!str)
+    {
+        ret = ft_putstr("(null)");
+        if (ret == -1) 
+            return -1;
+        return (6);
+    }
 
-	i = 0; 
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++; 
-	}
-	return i; 
+    i = 0; 
+    while (str[i] != '\0')
+    {
+        ret = write(1, &str[i], 1);
+        if (ret == -1) 
+            return -1;
+        i++; 
+    }
+    return i; 
 }
 
 int ft_putnbr(int n)
