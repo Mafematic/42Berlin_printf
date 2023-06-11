@@ -203,23 +203,33 @@ int ft_puthex_large(unsigned long long int n)
 
 int ft_putptr(void *ptr)
 {
-	// Linux
-	/*if (ptr == NULL)
+    int ret;
+    // Linux
+    /*if (ptr == NULL)
     {
-        write(1, "(nil)", 5);
+        ret = write(1, "(nil)", 5);
+        if (ret == -1)
+            return -1;
         return 5;
-    }
-	*/
-	// Mac
-	if (ptr == NULL)
+    }*/
+    // Mac
+    if (ptr == NULL)
     {
-		write(1, "0x0", 3);
+        ret = write(1, "0x0", 3);
+        if (ret == -1)
+            return -1;
         return 3;
     }
-	else
-	{
-		unsigned long long int addr = (unsigned long long int)ptr;
-		write(1, "0x", 2);
-		return (2 + ft_puthex(addr));
-	}
+    else
+    {
+        unsigned long long int addr = (unsigned long long int)ptr;
+        ret = write(1, "0x", 2);
+        if (ret == -1)
+            return -1;
+        ret = ft_puthex(addr);
+        if (ret == -1)
+            return -1;
+        return (2 + ret);
+    }
 }
+
