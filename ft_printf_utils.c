@@ -98,11 +98,11 @@ int ft_putnbr(int n)
     }
 
 	ret = ft_putstr(arr);
-        if (ret == -1)
-		{
-			free(arr);
-			return -1;
-		}
+	if (ret == -1)
+	{
+		free(arr);
+		return -1;
+	}
 
     free(arr);
 
@@ -122,6 +122,7 @@ int ft_putnbr_unsigned(unsigned int n)
     unsigned long num = n;
     char *arr;
     int i;
+	int ret;
 
     i = 0;
 
@@ -136,6 +137,10 @@ int ft_putnbr_unsigned(unsigned int n)
     }
 
     arr = (char*)malloc(sizeof(char) * (count + 1));
+	if (!arr)
+	{
+		return -1;
+	}
     arr[count] = '\0'; 
 
     if (n == 0)
@@ -149,8 +154,12 @@ int ft_putnbr_unsigned(unsigned int n)
             i++;
         }
     }
-
-    write(1, arr, count);
+	ret = ft_putstr(arr);
+	if (ret == -1)
+	{
+		free(arr);
+		return -1;
+	}
 
     free(arr);
 
