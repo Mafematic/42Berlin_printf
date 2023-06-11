@@ -55,11 +55,34 @@ int ft_printf(const char *format, ...)
 		}
 	}
 	va_end(args);
+	//printf("Count: %d\n", count);
 	return (count);
 }
 
+
 int main(void)
 {
+	//printf(" %d ", -1);
+	//printf("%d", printf(" %d ", -1));
+	//ft_printf("%d", ft_printf(" %d ", -1));
+
+	//printf(" %d ", 10);
+	ft_printf("%d", ft_printf("%d", 100));
+
+	//printf(" NULL %s NULL ", NULL);
+	//printf("%d", printf(" NULL %s NULL ", NULL));
+
+	//ft_printf("%s\n", NULL);
+	//ft_printf(" NULL %s NULL ", NULL);
+	//ft_printf("%d", ft_printf(" NULL %s NULL ", NULL));
+	
+	/*
+	printf("%s", "--");
+	printf("%d", printf("%s", "--"));
+	ft_printf("%s", "--");
+	ft_printf("%d", ft_printf("%s", "--"));
+
+
 	char str[] = "Hello";
 	int n = 255;
 	void *ptr = &n;
@@ -92,11 +115,11 @@ int main(void)
 	printf("\nTest 7:\n");
 	printf("printf: %%%c\n", c);
 	ft_printf("ft_printf: %%%c\n", c);
-	
+
 	printf("\nTest 8:\n");
 	printf("printf: %%\n");
 	ft_printf("ft_printf: %%\n");
-	
+
 	printf("\nTest 9:\n");
 	printf("printf: Hello\\nWorld\n");
 	ft_printf("ft_printf: Hello\\nWorld\n");
@@ -118,7 +141,7 @@ int main(void)
 	ft_printf("ft_printf: Edge case: %d\n", INT_MIN);
 
 	printf("\nBonus Tests\n");
-	
+
 	n = -42;
 
 	printf("Test 1:\n");
@@ -148,6 +171,9 @@ int main(void)
 	printf("\nTest 7:\n");
 	printf("printf: %.*s\n", 3, str);
 	ft_printf("ft_printf: %.*s\n", 3, str);
-
+	
+	*/
 	return 0;
+
 }
+

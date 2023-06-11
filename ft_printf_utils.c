@@ -17,7 +17,13 @@ int ft_putchar(int c)
 
 int ft_putstr(const char *str)
 {
-	int i; 
+	int i;
+
+	if (!str)
+	{
+		ft_putstr("(null)");
+		return (6);
+	}
 
 	i = 0; 
 	while (str[i] != '\0')
@@ -25,25 +31,25 @@ int ft_putstr(const char *str)
 		write(1, &str[i], 1);
 		i++; 
 	}
-	return 1; 
+	return i; 
 }
 
 int ft_putnbr(int n)
 {
 	long num;
 
-	num = n; 
+	num = n;
 	if (num < 0)
 	{
-		write(1, "-1", 1);
-		num = -num; 
+		write(1, "-", 1);
+		num = -num;
 	}
 	if (num >= 10)
 	{
 		ft_putnbr(num / 10);
 	}
 	ft_putchar(num % 10 + '0');
-	return 1; 
+	return count; 
 }
 
 int ft_puthex(unsigned long long int n)
