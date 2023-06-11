@@ -11,8 +11,10 @@ int ft_parse(const char *format, va_list args)
 		count += ft_putchar(va_arg(args, int));
 	else if (*format == 's')
 		count += ft_putstr(va_arg(args, char *));
-	else if (*format == 'd')
+	else if (*format == 'd' || *format == 'i')
 		count += ft_putnbr(va_arg(args, int));
+	else if (*format == 'u')
+		count += ft_putnbr_unsigned(va_arg(args, unsigned int));
 	else if (*format == 'x')
 		count += ft_puthex(va_arg(args, unsigned int));
 	else if (*format == 'X')
@@ -62,12 +64,14 @@ int ft_printf(const char *format, ...)
 /*
 int main(void)
 {
+	//printf(" %p %p ", 0, 0);
 	// printf(" %d ", -1);
 	// printf("%d", printf(" %d ", -1));
 	// ft_printf("%d", ft_printf(" %d ", -1));
 
 	//printf(" %d ", 10);
-	ft_printf("%d", ft_printf(" %d ", -100));
+	//printf("%d", printf(" %d ", 0));
+	//ft_printf("%d", ft_printf(" %d ", 0));
 
 	//printf(" NULL %s NULL ", NULL);
 	//printf("%d", printf(" NULL %s NULL ", NULL));
@@ -75,7 +79,6 @@ int main(void)
 	//ft_printf("%s\n", NULL);
 	//ft_printf(" NULL %s NULL ", NULL);
 	//ft_printf("%d", ft_printf(" NULL %s NULL ", NULL));
-	
 	
 	printf("%s", "--");
 	printf("%d", printf("%s", "--"));
@@ -173,7 +176,7 @@ int main(void)
 	ft_printf("ft_printf: %.*s\n", 3, str);
 	
 	return 0;
-
 }
 */
+
 

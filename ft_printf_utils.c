@@ -37,41 +37,102 @@ int ft_putstr(const char *str)
 
 int ft_putnbr(int n)
 {
-	long num;
-	int count = 0;
-	char *arr;
-	int i;
+    int count = 0;
+    long num = n;
+    char *arr;
+    int i;
 
-	i = 0;
-	if (n < 0)
-	{
-		n = -n;
-		i++;
-		count++;
-		write(1, "-", 1);
-	}
-	num = n;
-	while (n >= 1)
-	{
-		count++;
-		n /= 10;
-	}
-	arr = (char*)malloc(sizeof(char) * (count + 1));
-
-	arr[count] = '\0'; 
-
-    while (i < count)
+    i = 0;
+    if (num < 0)
     {
-        arr[count - i - 1] = num % 10 + '0';
-        num /= 10;
-        i++;
+        num = -num;
+    }
+
+    if (num == 0)
+        count++;
+
+    long tmp_num = num; 
+    while (tmp_num >= 1)
+    {
+        count++;
+        tmp_num /= 10;
+    }
+
+    arr = (char*)malloc(sizeof(char) * (count + 1));
+    arr[count] = '\0'; 
+
+    if (n == 0)
+        arr[0] = '0';
+    else
+    {
+        while (i < count)
+        {
+            arr[count - i - 1] = num % 10 + '0';
+            num /= 10;
+            i++;
+        }
+    }
+
+    if (n < 0)
+    {
+        write(1, "-", 1);
+    }
+    write(1, arr, count);
+
+    free(arr);
+
+    if(n < 0)
+	{
+    	return count + 1;
+	}
+	else
+	{
+    	return count;
+	}
+}
+
+int ft_putnbr_unsigned(unsigned int n)
+{
+    int count = 0;
+    unsigned long num = n;
+    char *arr;
+    int i;
+
+    i = 0;
+
+    if (num == 0)
+        count++;
+
+    unsigned long tmp_num = num; 
+    while (tmp_num >= 1)
+    {
+        count++;
+        tmp_num /= 10;
+    }
+
+    arr = (char*)malloc(sizeof(char) * (count + 1));
+    arr[count] = '\0'; 
+
+    if (n == 0)
+        arr[0] = '0';
+    else
+    {
+        while (i < count)
+        {
+            arr[count - i - 1] = num % 10 + '0';
+            num /= 10;
+            i++;
+        }
     }
 
     write(1, arr, count);
 
-	free(arr);
-	return count;
+    free(arr);
+
+    return count;
 }
+
+
 
 int ft_puthex(unsigned long long int n)
 {
@@ -133,7 +194,15 @@ int ft_puthex_large(unsigned long long int n)
 
 int ft_putptr(void *ptr)
 {
-	unsigned long long int addr = (unsigned long long int)ptr;
-	write(1, "0x", 2);
-	return (2 + ft_puthex(addr));
+	if (ptr == NULL)
+    {
+        write(1, "(nil)", 5);
+        return 5;
+    }
+	else
+	{
+		unsigned long long int addr = (unsigned long long int)ptr;
+		write(1, "0x", 2);
+		return (2 + ft_puthex(addr));
+	}
 }
