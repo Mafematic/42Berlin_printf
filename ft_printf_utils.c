@@ -90,11 +90,11 @@ int ft_putnbr(int n)
     if (n < 0)
     {
 		ret = ft_putchar('-');
-            if (ret == -1)
-			{
-				free(arr);
-				return -1;
-			}       
+		if (ret == -1)
+		{
+			free(arr);
+			return -1;
+		}       
     }
 
 	ret = ft_putstr(arr);
@@ -172,12 +172,17 @@ int ft_puthex(unsigned long long int n)
 {
 	char hex_digits[] = "0123456789abcdef";
 	char hex[16]; 
+	int ret;
 
 	int i = 0;
 	int remainder;
 	if (n == 0)
 	{
-		write(1, "0", 1);
+		ret = ft_putchar('0');
+		if (ret == -1)
+		{
+			return -1;
+		}  
 		return 1;
 	}
 
@@ -192,7 +197,11 @@ int ft_puthex(unsigned long long int n)
 	while (i > 0)
 	{
 		i--;
-		write(1, &hex[i], 1);
+		ret = ft_putchar(hex[i]);
+		if (ret == -1)
+		{
+			return -1;
+		} 
 	}
 	return final;
 }
@@ -200,28 +209,37 @@ int ft_puthex(unsigned long long int n)
 int ft_puthex_large(unsigned long long int n)
 {
 	char hex_digits[] = "0123456789ABCDEF";
-	char hex[9];
+	char hex[16]; 
+	int ret;
 
 	int i = 0;
 	int remainder;
 	if (n == 0)
 	{
-		write(1, "0", 1);
+		ret = ft_putchar('0');
+		if (ret == -1)
+		{
+			return -1;
+		}  
 		return 1;
 	}
 
 	while (n != 0)
 	{
-		remainder = n % 16;
+		remainder = n % 16; 
 		hex[i] = hex_digits[remainder];
-		n /= 16;
-		i++;
+		n /= 16; 
+		i++; 
 	}
-	int final = i;
+	int final = i;  
 	while (i > 0)
 	{
 		i--;
-		write(1, &hex[i], 1);
+		ret = ft_putchar(hex[i]);
+		if (ret == -1)
+		{
+			return -1;
+		} 
 	}
 	return final;
 }
