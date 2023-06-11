@@ -12,9 +12,13 @@ int ft_isalpha(int c)
 
 int ft_putchar(int c)
 {
-	write(1, &c, 1);
-	return (1);
+    int ret = write(1, &c, 1);
+    if (ret == -1)
+        return (-1);
+    else
+        return (1);
 }
+
 
 int ft_putstr(const char *str)
 {
