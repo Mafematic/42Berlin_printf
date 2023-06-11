@@ -2,68 +2,68 @@
 #include <stdio.h>
 #include <limits.h>
 
-int ft_parse(const char *format, va_list args)
+int ft_parse(const char *format, va_list args, int *processed_chars)
 {
-	int count;
+    int count = 0;
+    *processed_chars = 1;
 
-	count = 0;
-	if (*format == 'c')
-		count += ft_putchar(va_arg(args, int));
-	else if (*format == 's')
-		count += ft_putstr(va_arg(args, char *));
-	else if (*format == 'd' || *format == 'i')
-		count += ft_putnbr(va_arg(args, int));
-	else if (*format == 'u')
-		count += ft_putnbr_unsigned(va_arg(args, unsigned int));
-	else if (*format == 'x')
-		count += ft_puthex(va_arg(args, unsigned int));
-	else if (*format == 'X')
-		count += ft_puthex_large(va_arg(args, unsigned int));
-	else if (*format == 'p')
-		count += ft_putptr(va_arg(args, void *));
-	else if (*format == '%')
-		count += ft_putchar('%');
-	return (count);
+    if (*format == 'c')
+        count += ft_putchar(va_arg(args, int));
+    else if (*format == 's')
+        count += ft_putstr(va_arg(args, char *));
+    else if (*format == 'd' || *format == 'i')
+        count += ft_putnbr(va_arg(args, int));
+    else if (*format == 'u')
+        count += ft_putnbr_unsigned(va_arg(args, unsigned int));
+    else if (*format == 'x')
+        count += ft_puthex(va_arg(args, unsigned int));
+    else if (*format == 'X')
+        count += ft_puthex_large(va_arg(args, unsigned int));
+    else if (*format == 'p')
+        count += ft_putptr(va_arg(args, void *));
+    else if (*format == '%')
+        count += ft_putchar('%');
+
+    return count;
 }
 
 int ft_printf(const char *format, ...)
 {
-	int i;
-	int count;
-	va_list args;
+    int i = 0;
+    int count = 0;
+    va_list args;
+    int processed_chars;
 
-	i = 0;
-	count = 0;
-	va_start(args, format);
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			if (ft_isalpha(format[i]) || format[i] == '%')
-			{
-				count += ft_parse(&format[i], args);
-				if (format[i] == '%')
-					i++; 
-				while (ft_isalpha(format[i]))
-					i++;
-			}
-		}
-		else
-		{
-			ft_putchar(format[i]);
-			count++;
-			i++;
-		}
-	}
-	va_end(args);
-	//printf("Count: %d\n", count);
-	return (count);
+    va_start(args, format);
+    while (format[i])
+    {
+        if (format[i] == '%')
+        {
+            i++;
+            if (ft_isalpha(format[i]) || format[i] == '%')
+            {
+                count += ft_parse(&format[i], args, &processed_chars);
+                i += processed_chars;
+            }
+        }
+        else
+        {
+            ft_putchar(format[i]);
+            count++;
+            i++;
+        }
+    }
+    va_end(args);
+
+    return count;
 }
 
 /*
 int main(void)
 {
+	//char d = 'h';
+	//printf("%%c");
+	//printf("%%c");
 	//printf(" %p %p ", 0, 0);
 	// printf(" %d ", -1);
 	// printf("%d", printf(" %d ", -1));
@@ -174,9 +174,9 @@ int main(void)
 	printf("\nTest 7:\n");
 	printf("printf: %.*s\n", 3, str);
 	ft_printf("ft_printf: %.*s\n", 3, str);
-	
 	return 0;
 }
 */
+
 
 
