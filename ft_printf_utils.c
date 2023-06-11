@@ -50,6 +50,7 @@ int ft_putnbr(int n)
     long num = n;
     char *arr;
     int i;
+	int ret;
 
     i = 0;
     if (num < 0)
@@ -84,9 +85,14 @@ int ft_putnbr(int n)
 
     if (n < 0)
     {
-        write(1, "-", 1);
+		ret = ft_putchar('-');
+            if (ret == -1) 
+                return -1;
     }
-    write(1, arr, count);
+
+	ret = ft_putstr(arr);
+        if (ret == -1) 
+            return -1;
 
     free(arr);
 
