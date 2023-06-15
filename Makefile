@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-SOURCES = ft_printf.c ft_printf_utils.c
+SOURCES = ft_printf.c ft_printf_utils.c ft_print_int.c ft_print_unsigned_int.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
