@@ -22,135 +22,15 @@ int	ft_isalpha(int c)
 	return (0);
 }
 
-int	ft_putchar(int c)
-{
-	int	ret;
-
-	ret = write(1, &c, 1);
-	if (ret == -1)
-		return (-1);
-	else
-		return (1);
-}
-
-int	ft_putstr(const char *str)
+char	*ft_strcpy(char *dest, char *src)
 {
 	int	i;
-	int	ret;
 
-	if (!str)
-	{
-		ret = ft_putstr("(null)");
-		if (ret == -1)
-			return (-1);
-		return (6);
-	}
 	i = 0;
-	while (str[i] != '\0')
+	while (src[i] != '\0')
 	{
-		ret = write(1, &str[i], 1);
-		if (ret == -1)
-			return (-1);
+		dest[i] = src[i];
 		i++;
 	}
-	return (i);
-}
-
-int	ft_puthex(unsigned long long int n)
-{
-	char	hex_digits[17] = "0123456789abcdef";
-	char	hex[17];
-	int		i;
-	int		final;
-
-	i = 0;
-	if (n == 0)
-	{
-		return (ft_putchar('0'));
-	}
-	while (n != 0)
-	{
-		hex[i++] = hex_digits[n % 16];
-		n /= 16;
-	}
-	final = i;
-	while (i-- > 0)
-	{
-		if (ft_putchar(hex[i]) == -1)
-			return -1;
-	}
-	return (final);
-}
-
-int	ft_puthex_large(unsigned long long int n)
-{
-	char	hex_digits[] = "0123456789ABCDEF";
-	char	hex[17];
-	int		ret;
-	int		i;
-	int		remainder;
-	int		final;
-
-	i = 0;
-	if (n == 0)
-	{
-		ret = ft_putchar('0');
-		if (ret == -1)
-		{
-			return (-1);
-		}
-		return 1;
-	}
-	while (n != 0)
-	{
-		remainder = n % 16;
-		hex[i] = hex_digits[remainder];
-		n /= 16;
-		i++;
-	}
-	final = i;
-	while (i > 0)
-	{
-		i--;
-		ret = ft_putchar(hex[i]);
-		if (ret == -1)
-		{
-			return -1;
-		}
-	}
-	return final;
-}
-
-int	ft_putptr(void *ptr)
-{
-	int						ret;
-	unsigned long long int	addr;
-
-	// Linux
-	/*if (ptr == NULL)
-    {
-        ret = write(1, "(nil)", 5);
-        if (ret == -1)
-            return -1;
-        return 5;
-    }*/
-	// Mac
-	if (ptr == NULL)
-	{
-		ret = write(1, "0x0", 3);
-		if (ret == -1)
-			return -1;
-		return 3;
-	}
-	else
-	{
-		addr = (unsigned long long int)ptr;
-		ret = write(1, "0x", 2);
-		if (ret == -1)
-			return -1;
-		ret = ft_puthex(addr);
-		if (ret == -1)
-			return -1;
-		return (2 + ret);
-	}
+	return (dest);
 }

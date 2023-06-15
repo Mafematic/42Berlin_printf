@@ -31,5 +31,6 @@ int		count_digits(long num);
 char	*allocate_string_memory(int size);
 int		print_number_string(long num);
 int		print_number_string_unsigned(unsigned long num);
+char	*ft_strcpy(char *dest, char *src);
 
 #endif 

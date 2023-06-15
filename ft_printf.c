@@ -14,65 +14,65 @@
 #include <stdio.h>
 #include <limits.h>
 
-int ft_parse(const char *format, va_list args, int *processed_chars)
+int	ft_parse(const char *format, va_list args, int *processed_chars)
 {
-    int count = 0;
-    *processed_chars = 1;
+	int	count;
 
-    if (*format == 'c')
-        count += ft_putchar(va_arg(args, int));
-    else if (*format == 's')
-        count += ft_putstr(va_arg(args, char *));
-    else if (*format == 'd' || *format == 'i')
-        count += ft_putnbr(va_arg(args, int));
-    else if (*format == 'u')
-        count += ft_putnbr_unsigned(va_arg(args, unsigned int));
-    else if (*format == 'x')
-        count += ft_puthex(va_arg(args, unsigned int));
-    else if (*format == 'X')
-        count += ft_puthex_large(va_arg(args, unsigned int));
-    else if (*format == 'p')
-        count += ft_putptr(va_arg(args, void *));
-    else if (*format == '%')
-        count += ft_putchar('%');
-
-    return count;
+	*processed_chars = 1;
+	count = 0;
+	if (*format == 'c')
+		count += ft_putchar(va_arg(args, int));
+	else if (*format == 's')
+		count += ft_putstr(va_arg(args, char *));
+	else if (*format == 'd' || *format == 'i')
+		count += ft_putnbr(va_arg(args, int));
+	else if (*format == 'u')
+		count += ft_putnbr_unsigned(va_arg(args, unsigned int));
+	else if (*format == 'x')
+		count += ft_puthex(va_arg(args, unsigned int));
+	else if (*format == 'X')
+		count += ft_puthex_large(va_arg(args, unsigned int));
+	else if (*format == 'p')
+		count += ft_putptr(va_arg(args, void *));
+	else if (*format == '%')
+		count += ft_putchar('%');
+	return (count);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-    int i = 0;
-    int count = 0;
-    va_list args;
-    int processed_chars;
-    int ret;
+	int		i;
+	int		count;
+	va_list	args;
+	int		processed_chars;
 
-    va_start(args, format);
-    while (format[i])
-    {
-        if (format[i] == '%')
-        {
-            i++;
-            if (ft_isalpha(format[i]) || format[i] == '%')
-            {
-                ret = ft_parse(&format[i], args, &processed_chars);
-                if (ret == -1) 
-                    return -1; // Handle error from ft_parse
-                count += ret;
-                i += processed_chars;
-            }
-        }
-        else
-        {
-            ret = ft_putchar(format[i]);
-            if (ret == -1) 
-                return -1; // Handle error from ft_putchar
-            count++;
-            i++;
-        }
-    }
-    va_end(args);
-    return count;
+	va_start(args, format);
+	i = 0;
+	count = 0;
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			if (ft_isalpha(format[i]) || format[i] == '%')
+			{
+				processed_chars = 0;
+				count += ft_parse(&format[i], args, &processed_chars);
+				if (count < 0) 
+					return (-1);
+				i += processed_chars;
+			}
+		}
+		else
+		{
+			count += ft_putchar(format[i]);
+			if (count < 0)
+				return (-1);
+			i++;
+		}
+	}
+	va_end(args);
+	return (count);
 }
 
 
@@ -195,6 +195,3 @@ int main(void)
 	return 0;
 }
 */
-
-
-
