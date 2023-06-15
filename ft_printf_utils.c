@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fszendzi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/15 15:11:52 by fszendzi          #+#    #+#             */
+/*   Updated: 2023/06/15 15:11:55 by fszendzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <stdio.h>
 
@@ -46,47 +58,34 @@ int	ft_putstr(const char *str)
 
 int	ft_puthex(unsigned long long int n)
 {
-	char hex_digits[] = "0123456789abcdef";
-	char	hex[16];
-	int		ret;
+	char	hex_digits[17] = "0123456789abcdef";
+	char	hex[17];
 	int		i;
-	int		remainder;
 	int		final;
 
 	i = 0;
 	if (n == 0)
 	{
-		ret = ft_putchar('0');
-		if (ret == -1)
-		{
-			return (-1);
-		}
-		return (1);
+		return (ft_putchar('0'));
 	}
 	while (n != 0)
 	{
-		remainder = n % 16;
-		hex[i] = hex_digits[remainder];
+		hex[i++] = hex_digits[n % 16];
 		n /= 16;
-		i++;
 	}
 	final = i;
-	while (i > 0)
+	while (i-- > 0)
 	{
-		i--;
-		ret = ft_putchar(hex[i]);
-		if (ret == -1)
-		{
-			return (-1);
-		}
+		if (ft_putchar(hex[i]) == -1)
+			return -1;
 	}
 	return (final);
 }
 
 int	ft_puthex_large(unsigned long long int n)
 {
-	char hex_digits[] = "0123456789ABCDEF";
-	char	hex[16];
+	char	hex_digits[] = "0123456789ABCDEF";
+	char	hex[17];
 	int		ret;
 	int		i;
 	int		remainder;
