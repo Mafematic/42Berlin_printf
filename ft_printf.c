@@ -45,7 +45,7 @@ int	ft_printf(const char *format, ...)
 	int		count;
 	va_list	args;
 	int		processed_chars;
-
+	int		ret;
 	va_start(args, format);
 	i = 0;
 	count = 0;
@@ -56,23 +56,24 @@ int	ft_printf(const char *format, ...)
 			i++;
 			if (ft_isalpha(format[i]) || format[i] == '%')
 			{
-				processed_chars = 0;
-				count += ft_parse(&format[i], args, &processed_chars);
-				if (count < 0) 
-					return (-1);
+				ret = ft_parse(&format[i], args, &processed_chars);
+				if (ret == -1) 
+					return -1;
+				count += ret;
 				i += processed_chars;
 			}
 		}
 		else
 		{
-			count += ft_putchar(format[i]);
-			if (count < 0)
-				return (-1);
+			ret = ft_putchar(format[i]);
+			if (ret == -1)
+				return -1;
+			count++;
 			i++;
 		}
-	}
-	va_end(args);
-	return (count);
+    }
+    va_end(args);
+    return count;
 }
 
 
@@ -195,3 +196,6 @@ int main(void)
 	return 0;
 }
 */
+
+
+
