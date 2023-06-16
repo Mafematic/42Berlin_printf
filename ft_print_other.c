@@ -133,5 +133,3 @@ int	ft_putptr(void *ptr)
 		return (2 + ret);
 	}
 }
-
-

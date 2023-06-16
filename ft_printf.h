@@ -18,7 +18,7 @@
 # include <stdlib.h>
 
 int		ft_printf(const char *format, ...);
-int 	ft_vprintf(const char *format, va_list args, int *count, int *ret, int *processed);
+int		ft_vprintf(const char *format, va_list args, int *count, int *ret);
 int		ft_putchar(int c);
 int		ft_putstr(const char *str);
 int		ft_putnbr(int n);

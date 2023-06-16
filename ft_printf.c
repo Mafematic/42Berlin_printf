@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
 
-int	ft_parse_format(const char *format, va_list args, int *processed)
+int	ft_parse_format(const char *format, va_list args)
 {
 	int	count;
 
@@ -35,11 +33,10 @@ int	ft_parse_format(const char *format, va_list args, int *processed)
 		count += ft_putptr(va_arg(args, void *));
 	else if (*format == '%')
 		count += ft_putchar('%');
-	*processed = 1;
 	return (count);
 }
 
-int	ft_vprintf(const char *format, va_list args, int *count, int *ret, int *processed)
+int	ft_vprintf(const char *format, va_list args, int *count, int *ret)
 {
 	int	i;
 
@@ -51,11 +48,11 @@ int	ft_vprintf(const char *format, va_list args, int *count, int *ret, int *proc
 			i++;
 			if (ft_isalpha(format[i]) || format[i] == '%')
 			{
-				*ret = ft_parse_format(&format[i], args, processed);
+				*ret = ft_parse_format(&format[i], args);
 				if (*ret == -1)
 					return (-1);
 				*count += *ret;
-				i += *processed;
+				i++;
 			}
 		}
 		else
@@ -68,21 +65,24 @@ int	ft_vprintf(const char *format, va_list args, int *count, int *ret, int *proc
 	return (*count);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	va_list args;
-	va_start(args, format);
-	int count;
-	int ret;
-	int processed;
+	va_list	args;
+	int		count;
+	int		ret;
 
-	count = 0; 
-	count = ft_vprintf(format, args, &count, &ret, &processed);
+	va_start(args, format);
+	count = 0;
+	ret = 0;
+	count = ft_vprintf(format, args, &count, &ret);
 	va_end(args);
-	return count;
+	return (count);
 }
 
 /*
+#include <stdio.h>
+#include <limits.h>
+
 int main(void)
 {
 	//char d = 'h';
@@ -206,7 +206,7 @@ int	ft_printf(const char *format, ...)
 	int		i;
 	int		count;
 	va_list	args;
-	int		processed_chars;
+
 	va_start(args, format);
 	i = 0;
 	count = 0;
@@ -217,8 +217,8 @@ int	ft_printf(const char *format, ...)
 			i++;
 			if (ft_isalpha(format[i]) || format[i] == '%')
 			{
-				count += ft_parse(&format[i], args, &processed_chars);
-				i += processed_chars;
+				count += ft_parse(&format[i], args);
+				i++;
 			}
 		}
 		else
