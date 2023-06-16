@@ -14,11 +14,10 @@
 #include <stdio.h>
 #include <limits.h>
 
-int	ft_parse(const char *format, va_list args, int *processed_chars)
+int	ft_parse_format(const char *format, va_list args, int *processed)
 {
 	int	count;
 
-	*processed_chars = 1;
 	count = 0;
 	if (*format == 'c')
 		count += ft_putchar(va_arg(args, int));
@@ -36,19 +35,15 @@ int	ft_parse(const char *format, va_list args, int *processed_chars)
 		count += ft_putptr(va_arg(args, void *));
 	else if (*format == '%')
 		count += ft_putchar('%');
+	*processed = 1;
 	return (count);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_vprintf(const char *format, va_list args, int *count, int *ret, int *processed)
 {
-	int		i;
-	int		count;
-	va_list	args;
-	int		processed_chars;
-	int		ret;
-	va_start(args, format);
+	int	i;
+
 	i = 0;
-	count = 0;
 	while (format[i])
 	{
 		if (format[i] == '%')
@@ -56,26 +51,36 @@ int	ft_printf(const char *format, ...)
 			i++;
 			if (ft_isalpha(format[i]) || format[i] == '%')
 			{
-				ret = ft_parse(&format[i], args, &processed_chars);
-				if (ret == -1) 
-					return -1;
-				count += ret;
-				i += processed_chars;
+				*ret = ft_parse_format(&format[i], args, processed);
+				if (*ret == -1)
+					return (-1);
+				*count += *ret;
+				i += *processed;
 			}
 		}
 		else
 		{
-			ret = ft_putchar(format[i]);
-			if (ret == -1)
-				return -1;
-			count++;
-			i++;
+			if (ft_putchar(format[i++]) == -1)
+				return (-1);
+			(*count)++;
 		}
-    }
-    va_end(args);
-    return count;
+	}
+	return (*count);
 }
 
+int ft_printf(const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	int count;
+	int ret;
+	int processed;
+
+	count = 0; 
+	count = ft_vprintf(format, args, &count, &ret, &processed);
+	va_end(args);
+	return count;
+}
 
 /*
 int main(void)
@@ -98,7 +103,7 @@ int main(void)
 	//ft_printf("%s\n", NULL);
 	//ft_printf(" NULL %s NULL ", NULL);
 	//ft_printf("%d", ft_printf(" NULL %s NULL ", NULL));
-	
+
 	printf("%s", "--");
 	printf("%d", printf("%s", "--"));
 	ft_printf("%s", "--");
@@ -195,7 +200,34 @@ int main(void)
 	ft_printf("ft_printf: %.*s\n", 3, str);
 	return 0;
 }
+
+int	ft_printf(const char *format, ...)
+{
+	int		i;
+	int		count;
+	va_list	args;
+	int		processed_chars;
+	va_start(args, format);
+	i = 0;
+	count = 0;
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			if (ft_isalpha(format[i]) || format[i] == '%')
+			{
+				count += ft_parse(&format[i], args, &processed_chars);
+				i += processed_chars;
+			}
+		}
+		else
+		{
+			ft_putchar(format[i++]);
+			count++;
+		}
+	}
+	va_end(args);
+	return count;
+}
 */
-
-
-

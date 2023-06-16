@@ -107,11 +107,20 @@ int	ft_putptr(void *ptr)
 
 	if (ptr == NULL)
 	{
+		ret = write(1, "0x0", 3);
+		if (ret == -1)
+			return (-1);
+		return (3);
+	}
+	/*
+	if (ptr == NULL)
+	{
 		ret = write(1, "(nil)", 5);
 		if (ret == -1)
 			return (-1);
 		return (5);
 	}
+	*/
 	else
 	{
 		addr = (unsigned long long int)ptr;
@@ -125,12 +134,4 @@ int	ft_putptr(void *ptr)
 	}
 }
 
-/* MAC
-	if (ptr == NULL)
-	{
-		ret = write(1, "0x0", 3);
-		if (ret == -1)
-			return (-1);
-		return (3);
-	}
-	*/
+
